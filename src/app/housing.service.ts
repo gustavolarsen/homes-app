@@ -109,6 +109,8 @@ export class HousingService {
     }
   ];
 
+  constructor() { }
+
   getAllHousingLocations(): HousingLocation[] {
     return this.housingLocationList;
   }
@@ -119,5 +121,7 @@ export class HousingService {
     );
   }
 
-  constructor() { }
+  submitAppication(firstName: string, lastName: string, email: string) {
+    console.log(firstName, lastName, email);
+  }
 }
