@@ -67,8 +67,12 @@ export class DetailsComponent {
     private housingService: HousingService
   ) {
     const housingLocationId = Number(this.route.snapshot.params['id']);
-    this.housingLocation = this.housingService.getHousiongLocationById(housingLocationId);
+    this.getHousiongLocationById(housingLocationId);
   };
+
+  private async getHousiongLocationById(id: Number): Promise<void> {
+    this.housingLocation = await this.housingService.getHousiongLocationById(id);
+  }
 
   submitApplication() {
     this.housingService.submitAppication(
