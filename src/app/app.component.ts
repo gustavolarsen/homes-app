@@ -8,7 +8,9 @@ import { HomeComponent } from './home/home.component';
   template: `
     <main>
       <header class="brand-name">
-        <img src="/assets/logo.svg" alt="logo" aria-hidden="true" class="brand-logo">
+        <a href="/">
+          <img src="/assets/logo.svg" alt="logo" aria-hidden="true" class="brand-logo">
+        </a>
       </header>
       <section class="content">
        <router-outlet />
