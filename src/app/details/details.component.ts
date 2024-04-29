@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../housing-location';
@@ -53,7 +53,7 @@ import { HousingService } from '../housing.service';
   `,
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   housingLocation: HousingLocation | undefined;
 
   applyForm = new FormGroup({
@@ -65,20 +65,27 @@ export class DetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private housingService: HousingService
-  ) {
-    const housingLocationId = Number(this.route.snapshot.params['id']);
-    this.getHousiongLocationById(housingLocationId);
-  };
+  ) { }
 
-  private async getHousiongLocationById(id: Number): Promise<void> {
-    this.housingLocation = await this.housingService.getHousiongLocationById(id);
+  ngOnInit(): void {
+    const housingLocationId = Number(this.route.snapshot.params['id']);
+    this.getHousingLocationById(housingLocationId);
   }
 
-  submitApplication() {
-    this.housingService.submitAppication(
+  private getHousingLocationById(id: number): void {
+    this.housingService.getHousingLocationById(id)
+      .subscribe(
+        (location: HousingLocation) => {
+          this.housingLocation = location;
+        }
+      );
+  }
+
+  submitApplication(): void {
+    this.housingService.submitApplication(
       this.applyForm.value.firstName ?? '',
       this.applyForm.value.lastName ?? '',
-      this.applyForm.value.email ?? '',
+      this.applyForm.value.email ?? ''
     );
 
     this.applyForm.reset();

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import { HousingLocation } from '../housing-location';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingService } from '../housing.service';
@@ -16,7 +17,7 @@ import { HousingService } from '../housing.service';
       </form>
       <section class="results">
         <app-housing-location 
-          *ngFor="let housingLocation of filteredLocationList" 
+          *ngFor="let housingLocation of (filteredLocationList$ | async)" 
           [housingLocation]="housingLocation">
         </app-housing-location>
       </section>
@@ -24,30 +25,28 @@ import { HousingService } from '../housing.service';
   `,
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-  housingLocationList: HousingLocation[] = [];
-  filteredLocationList: HousingLocation[] = [];
-
+export class HomeComponent implements OnInit {
+  filteredLocationList$: Observable<HousingLocation[]> | undefined;
 
   constructor(
     private housingService: HousingService
-  ) {
-    this.getAllHousingLocations();
-  }
+  ) { }
 
-  private async getAllHousingLocations(): Promise<void> {
-    this.housingLocationList = await this.housingService.getAllHousingLocations();
-    this.filteredLocationList = this.housingLocationList;
+  ngOnInit(): void {
+    this.filteredLocationList$ = this.housingService.getAllHousingLocations();
   }
 
   filterResults(text: string) {
     if (!text) {
-      this.filteredLocationList = this.housingLocationList;
+      this.filteredLocationList$ = this.housingService.getAllHousingLocations();
+      return;
     }
 
-    this.filteredLocationList = this.housingLocationList.filter(
-      locationsByCity => locationsByCity?.city.toLowerCase().includes(
-        text.toLowerCase())
-    );
+    this.filteredLocationList$ = this.housingService.getAllHousingLocations()
+      .pipe(
+        map(locations => locations.filter(
+          location => location.city.toLowerCase().includes(text.toLowerCase())
+        ))
+      );
   }
 }
