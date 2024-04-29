@@ -2,6 +2,9 @@
 
 Sistema desenvolvido seguindo o passo-a-passo da documentação oficial do Angular, [first-app](https://angular.dev/tutorials/first-app). 
 
+### Modificações em relação ao tutorial original
+Neste meu projeto eu fiz a substituição das `Promises` por `Observables`, nas requisições **http**.
+
 ## Como rodar o sistema
 
 - Instalar o Angular se você ainda não tiver
