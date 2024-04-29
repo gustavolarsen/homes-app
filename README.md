@@ -1,20 +1,37 @@
 # Angular Homes App
-- Install Angular if you don't have it installed
+
+Sistema desenvolvido seguindo o passo-a-passo da documentação oficial do Angular, [first-app](https://angular.dev/tutorials/first-app). 
+
+## Como rodar o sistema
+
+- Instalar o Angular se você ainda não tiver
 
   `npm install -g @angular/cli`
 
-- Clone this branch to your local machine
+- Instalar o JSON-SERVER para ter acesso ao mock da api
 
-  `git clone -b homes-app-start git@github.com:angular/codelabs.git homes-app`
+  `npm install -g json-server`
 
-- Once the code has been downloaded
+- Clonar o repositório
+
+  `git clone https://github.com/gustavolarsen/homes-app.git`
+
+- Acesse a pasta do projeto via terminal
 
   `cd homes-app`
 
-- Install the depencies
+- Instale as dependências
 
-  `npm install` 
+  `npm install`
 
-- Run the application 
+- Execute o mock da api e deixe-o rodando
 
-  `ng serve`
+  `json-server --watch db.json`
+
+- Rode a aplicação
+
+  Em um segudo terminal, acesse a pasta do projeto `homes-app` e rode o comando `ng serve`
+
+## Interface do sistema
+
+![image](https://github.com/gustavolarsen/homes-app/assets/55494775/d54071a1-4f0d-4fc5-955c-63571b31bb0a)
